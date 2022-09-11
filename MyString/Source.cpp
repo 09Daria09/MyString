@@ -42,156 +42,15 @@ public:
 		}
 		this->str[this->length] = '\0';
 	}
-	void MyStrcpy(MyString& other)
-	{
-		Delete();
-		this->length = strlen(other.str);
-		this->str = new char[this->length + 1];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->str[i] = other.str[i];
-		}
-		this->str[this->length] = '\0';
-	}
-	bool MyStrStr(const char* s)
-	{
-		int index;
-		int count = 0;
-		for (int i = 0; i < this->length; i++)
-		{
-			if (this->str[i] == s[0])
-			{
-				index = i;
-				for (int j = 0; j < strlen(s); index++, j++)
-				{
-					if (str[index] == s[j])
-					{
-						count++;
-					}
-					if (count == strlen(s))
-					{
-						return true;
-					}
-				}
-			}
-		}
-		return false;
-	}
-	int  MyChr(char c)
-	{
-		this->length = strlen(this->str);
-		for (int i = 0; i < this->length; i++)
-		{
-			if (this->str[i] == c)
-			{
-				return i;
-			}
-
-		}
-		cout << "Значение не найдено -1";
-		return -1;
-	}
-	int MyStrLen()
-	{
-		int count = 0;
-		while (this->str[count] != '\0')
-		{
-			count++;
-		}
-		return count;
-	}
-	void MyStrCat(MyString& b)
-	{
-		MyString newObj;
-		int LengOne = strlen(this->str);
-		int LengTwo = strlen(b.str);
-		this->length = LengOne + LengTwo;
-		newObj.str = new char[this->length + 1];
-		int i = 0;
-		for (; i < LengOne; i++)
-		{
-			newObj.str[i] = this->str[i];
-		}
-		for (int j = 0; j < LengTwo && i<length; j++, i++)
-		{
-			newObj.str[i] = b.str[j];
-		}
-		Delete();
-		newObj.str[this->length] = '\0';
-		this->str = new char[this->length + 1];
-		for (int k = 0; k < this->length; k++)
-		{
-			this->str[k] = newObj.str[k];
-		}
-		this->str[this->length] = '\0';
-	}
-	void MyDelChr(char c)
-	{
-		int index = NULL;
-		for (int i = 0; i < this->length; i++)
-		{
-			if (this->str[i] == c)
-			{
-				index = i;
-				break;
-			}
-		}
-		MyString newobj;
-		this->length = this->length - 1;
-		newobj.str = new char[this->length + 1];
-		for (int j = 0; j < index; j++)
-		{
-			newobj.str[j] = this->str[j];
-		}
-		for (int k = index; k < this->length; k++)
-		{
-			newobj.str[k] = this->str[k + 1];
-		}
-		newobj.str[this->length] = '\0';
-		Delete();
-		this->str = new char[this->length + 1];
-		for (int h = 0; h < this->length; h++)
-		{
-			this->str[h] = newobj.str[h];
-		}
-		this->str[this->length] = '\0';
-	}
-	int MyStrCmp(MyString& b)
-	{
-		if (strlen(this->str) == strlen(b.str))
-		{
-			cout << "Cтроки равны ";
-			return 0;
-		}
-		else if (strlen(this->str) > strlen(b.str))
-		{
-			cout << "Первая больше чем вторая ";
-			return 1;
-		}
-		else
-		{
-			cout << "Первая строка меньше чем вторая ";
-			return -1;
-		}
-	}
-	void SetStr()
-	{
-		MyString newObj;
-		cout << "Введите строку: ";
-		cin >> newObj.str;
-		Delete();
-		this->length = strlen(newObj.str);
-		this->str = new char[this->length + 1];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->str[i] = newObj.str[i];
-		}
-		this->str[this->length] = '\0';
-	}
-	void Print()
-	{
-		cout << this->str;
-	}
+	void MyStrcpy(MyString& other);
+	bool MyStrStr(const char* s);
+	int  MyChr(char c);
+	int MyStrLen();
+	void MyStrCat(MyString& b);
+	void MyDelChr(char c);
+	int MyStrCmp(MyString& b);
+	void SetStr();
+	void Print();
 	static int GetNumberOfobj()
 	{
 		return numberOfobjects;
@@ -203,6 +62,156 @@ public:
 };
 const int MyString::amountOfLetters = 80;
 int MyString::numberOfobjects = 0;
+void MyString::MyStrcpy(MyString& other)
+{
+	Delete();
+	this->length = strlen(other.str);
+	this->str = new char[this->length + 1];
+	for (int i = 0; i < this->length; i++)
+	{
+		this->str[i] = other.str[i];
+	}
+	this->str[this->length] = '\0';
+}
+bool MyString::MyStrStr(const char* s)
+{
+	int index;
+	int count = 0;
+	for (int i = 0; i < this->length; i++)
+	{
+		if (this->str[i] == s[0])
+		{
+			index = i;
+			for (int j = 0; j < strlen(s); index++, j++)
+			{
+				if (str[index] == s[j])
+				{
+					count++;
+				}
+				if (count == strlen(s))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+int  MyString::MyChr(char c)
+{
+	this->length = strlen(this->str);
+	for (int i = 0; i < this->length; i++)
+	{
+		if (this->str[i] == c)
+		{
+			return i;
+		}
+
+	}
+	cout << "Значение не найдено -1";
+	return -1;
+}
+int  MyString::MyStrLen()
+{
+	int count = 0;
+	while (this->str[count] != '\0')
+	{
+		count++;
+	}
+	return count;
+}
+void MyString::MyStrCat(MyString& b)
+{
+	MyString newObj;
+	int LengOne = strlen(this->str);
+	int LengTwo = strlen(b.str);
+	this->length = LengOne + LengTwo;
+	newObj.str = new char[this->length + 1];
+	int i = 0;
+	for (; i < LengOne; i++)
+	{
+		newObj.str[i] = this->str[i];
+	}
+	for (int j = 0; j < LengTwo && i < length; j++, i++)
+	{
+		newObj.str[i] = b.str[j];
+	}
+	Delete();
+	newObj.str[this->length] = '\0';
+	this->str = new char[this->length + 1];
+	for (int k = 0; k < this->length; k++)
+	{
+		this->str[k] = newObj.str[k];
+	}
+	this->str[this->length] = '\0';
+}
+void MyString::MyDelChr(char c)
+{
+	int index = NULL;
+	for (int i = 0; i < this->length; i++)
+	{
+		if (this->str[i] == c)
+		{
+			index = i;
+			break;
+		}
+	}
+	MyString newobj;
+	this->length = this->length - 1;
+	newobj.str = new char[this->length + 1];
+	for (int j = 0; j < index; j++)
+	{
+		newobj.str[j] = this->str[j];
+	}
+	for (int k = index; k < this->length; k++)
+	{
+		newobj.str[k] = this->str[k + 1];
+	}
+	newobj.str[this->length] = '\0';
+	Delete();
+	this->str = new char[this->length + 1];
+	for (int h = 0; h < this->length; h++)
+	{
+		this->str[h] = newobj.str[h];
+	}
+	this->str[this->length] = '\0';
+}
+int MyString::MyStrCmp(MyString& b)
+{
+	if (strlen(this->str) == strlen(b.str))
+	{
+		cout << "Cтроки равны ";
+		return 0;
+	}
+	else if (strlen(this->str) > strlen(b.str))
+	{
+		cout << "Первая больше чем вторая ";
+		return 1;
+	}
+	else
+	{
+		cout << "Первая строка меньше чем вторая ";
+		return -1;
+	}
+}
+void MyString::SetStr()
+{
+	MyString newObj;
+	cout << "Введите строку: ";
+	cin >> newObj.str;
+	Delete();
+	this->length = strlen(newObj.str);
+	this->str = new char[this->length + 1];
+	for (int i = 0; i < this->length; i++)
+	{
+		this->str[i] = newObj.str[i];
+	}
+	this->str[this->length] = '\0';
+}
+void MyString::Print()
+{
+	cout << this->str;
+}
 int main()
 {
 	setlocale(LC_ALL, "ru");
