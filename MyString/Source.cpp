@@ -40,10 +40,6 @@ public:
 	}
 	void MyStrcpy(MyString& other)
 	{
-		if (this->str != nullptr)
-		{
-			delete[]str;
-		}
 		this->length = strlen(other.str);
 		this->str = new char[this->length + 1];
 		for (int i = 0; i < this->length; i++)
@@ -54,18 +50,31 @@ public:
 	}
 	bool MyStrStr(const char* s)
 	{
+		int index;
 		int count = 0;
-		for (int i = 0, j = 0; i < length; i++)
+		for (int i = 0; i < this->length; i++)
 		{
-			if (this->str[i] == str[j]) {
-				j++;
-				count++;                    //Имея размер подстроки, цикл проверяет, является ли подстрока полной, в позитивном случае возвращает 1.
-				if (count == strlen(str)) {
-					return 1;
+			if (this->str[i] == s[0])
+			{
+				index = i;
+				for (int j=0;j<strlen(s); index++,j++ )
+				{
+					if (str[index] == s[j])
+					{
+						count++;
+					}
 				}
 			}
 		}
-		return 0;
+		if (count == strlen(s))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
 
 	}
 	int  MyChr(char c)
@@ -166,14 +175,25 @@ public:
 			return -1;
 		}
 	}
-	~MyString()
+	void SetStr()
 	{
-		delete[]this->str;
-
+		MyString newObj1;
+		cout << "Введите строку: ";
+		cin >> newObj1.str;
+		length = strlen(newObj1.str);
+		for (int i = 0; i<length; i++)
+		{
+			this->str[i] = newObj1.str[i];
+		}
+		this->str[length] = '\0';
 	}
 	void Print()
 	{
 		cout << this->str;
+	}
+	~MyString()
+	{
+		delete[]this->str;
 	}
 };
 const int MyString::amountOfLetters = 80;
@@ -198,8 +218,15 @@ int main()
 	/*str.MyDelChr('r');
 	str.Print();*/
 	//char b[2] = "ia";
+	/*cout << endl;
+	cout<<str2.MyStrStr("ku");*/
 	cout << endl;
-	cout<<str.MyStrStr("s");
+	str.SetStr();
+	cout << endl;
+	str.Print();
+	cout << endl;
+	str2.MyStrcpy(str);
+	str2.Print();
 
 
 
