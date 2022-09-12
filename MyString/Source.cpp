@@ -34,10 +34,7 @@ public:
 	{
 		return numberOfobjects;
 	}
-	~MyString()
-	{
-		delete[]this->str;
-	}
+	~MyString();
 };
 const int MyString::amountOfLetters = 80;
 int MyString::numberOfobjects = 0;
@@ -229,6 +226,10 @@ void MyString::SetStr()
 void MyString::Print()
 {
 	cout << this->str;
+}
+MyString::~MyString()
+{
+	delete[]this->str;
 }
 int main()
 {
