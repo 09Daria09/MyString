@@ -42,6 +42,8 @@ public:
 		}
 		this->str[this->length] = '\0';
 	}
+	MyString(const char* st,int l);
+	MyString(const MyString& st);
 	void MyStrcpy(MyString& other);
 	bool MyStrStr(const char* s);
 	int  MyChr(char c);
@@ -51,6 +53,7 @@ public:
 	int MyStrCmp(MyString& b);
 	void SetStr();
 	void Print();
+
 	static int GetNumberOfobj()
 	{
 		return numberOfobjects;
@@ -62,6 +65,17 @@ public:
 };
 const int MyString::amountOfLetters = 80;
 int MyString::numberOfobjects = 0;
+MyString::MyString(const char* st,int l)
+{
+	str = new char[strlen(st) + 1];
+	strcpy_s(str, strlen(st) + 1, st);
+	length = l;
+}
+MyString::MyString(const MyString& st)
+{
+	str = new char[strlen(st.str) + 1];
+	strcpy_s(str, strlen(st.str) + 1, st.str);
+}
 void MyString::MyStrcpy(MyString& other)
 {
 	Delete();
@@ -215,7 +229,7 @@ void MyString::Print()
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	MyString str("Daria");
+	/*MyString str("Daria");
 	MyString str2(" Kukuruza");
 	str.Print();
 	cout << endl;
@@ -242,5 +256,11 @@ int main()
 	str3.SetStr();
 	str3.Print();
 	cout << endl;
-    cout << "Count " << MyString::GetNumberOfobj();
+    cout << "Count " << MyString::GetNumberOfobj();*/
+	//////////////
+	MyString obj("Vasya",5);
+	MyString obj1(obj);
+	obj.Print();
+	cout << endl;
+	obj1.Print();
 }
