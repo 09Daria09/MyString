@@ -15,33 +15,9 @@ private:
 		}
 	}
 public:
-	MyString()
-	{
-		numberOfobjects++;
-		//this->str = nullptr;
-		this->length = amountOfLetters;
-		this->str = new char[this->length + 1];
-		this->str[this->length] = '\0';
-	}//конструктор по умолчанию, позволяющий создать строку длиной 80 символов
-	MyString(int length)//конструктор, позволяющий создавать строку произвольного размера; 
-	{
-		numberOfobjects++;
-		this->length = length;
-		this->str = new char[length + 1];
-		this->str[length] = '\0';
-
-	}//конструктор, позволяющий создавать строку произвольного размера
-	MyString(const char* str)
-	{
-		numberOfobjects++;
-		this->length = strlen(str);
-		this->str = new char[this->length + 1];
-		for (int i = 0; i < this->length; i++)
-		{
-			this->str[i] = str[i];
-		}
-		this->str[this->length] = '\0';
-	}
+	MyString();
+	MyString(int length);
+	MyString(const char* str);
 	MyString(const char* st,int l);
 	MyString(const MyString& st);
 	void MyStrcpy(MyString& other);
@@ -65,16 +41,44 @@ public:
 };
 const int MyString::amountOfLetters = 80;
 int MyString::numberOfobjects = 0;
+MyString::MyString()
+{
+	numberOfobjects++;
+	this->length = amountOfLetters;
+	this->str = new char[this->length + 1];
+	this->str[this->length] = '\0';
+}
+MyString::MyString(int length)
+{
+	numberOfobjects++;
+	this->length = length;
+	this->str = new char[length + 1];
+	this->str[length] = '\0';
+
+}
+MyString::MyString(const char* str)
+{
+	numberOfobjects++;
+	this->length = strlen(str);
+	this->str = new char[this->length + 1];
+	for (int i = 0; i < this->length; i++)
+	{
+		this->str[i] = str[i];
+	}
+	this->str[this->length] = '\0';
+}
 MyString::MyString(const char* st,int l)
 {
-	str = new char[strlen(st) + 1];
-	strcpy_s(str, strlen(st) + 1, st);
-	length = l;
+	length = strlen(st);
+	str = new char[length + 1];
+	strcpy_s(str, length + 1, st);
+	
 }
 MyString::MyString(const MyString& st)
 {
-	str = new char[strlen(st.str) + 1];
-	strcpy_s(str, strlen(st.str) + 1, st.str);
+	length = strlen(st.str);
+	str = new char[length + 1];
+	strcpy_s(str, length + 1, st.str);
 }
 void MyString::MyStrcpy(MyString& other)
 {
