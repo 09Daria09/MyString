@@ -29,7 +29,11 @@ public:
 	int MyStrCmp(MyString& b);
 	void SetStr();
 	void Print();
-
+	MyString& operator=(const MyString& obj);
+	void operator()();
+	char operator[](int index);
+	operator int();
+	operator char* ();
 	static int GetNumberOfobj()
 	{
 		return numberOfobjects;
@@ -76,6 +80,41 @@ MyString::MyString(const MyString& st)
 	length = strlen(st.str);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, st.str);
+}
+MyString& MyString:: operator=(const MyString& obj)
+{
+	if (this == &obj)
+	{
+		return *this;
+	}
+	if (str != nullptr)
+	{
+		this->~MyString();
+	}
+	str = new char[strlen(obj.str) + 1];
+	strcpy_s(str, strlen(obj.str) + 1, obj.str);
+	length = obj.length;
+	return *this;
+}
+void MyString::operator()()
+{
+	cout << this->str;
+}
+char MyString::operator[](int index)
+{
+	if (index >= 0 && index < strlen(str))
+	{
+		return str[index];
+	}
+	return '\0';
+}
+MyString::operator int()
+{
+	return length;
+}
+MyString::operator char* ()
+{
+	return str;
 }
 void MyString::MyStrcpy(MyString& other)
 {
@@ -234,38 +273,14 @@ MyString::~MyString()
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	/*MyString str("Daria");
+	MyString str1("Daria");
 	MyString str2(" Kukuruza");
-	str.Print();
-	cout << endl;
-	str2.Print();
-	cout << endl;
-	str.MyStrcpy(str2);
-	str.Print();
-	cout << endl;
-	cout<<str.MyStrStr("ku");
-	cout << endl;
-	cout << str.MyChr('K');
-	cout << endl;
-	cout << str.MyStrLen();
-	cout << endl;
-	str.MyStrCat(str2);
-	str.Print();
-	cout << endl;
-	str.MyDelChr('a');
-	str.Print();
-	cout << endl;
-	cout<<str.MyStrCmp(str2);
-	cout << endl;
-	MyString str3;
-	str3.SetStr();
-	str3.Print();
-	cout << endl;
-    cout << "Count " << MyString::GetNumberOfobj();*/
-	//////////////
-	MyString obj("Vasya",5);
-	MyString obj1(obj);
-	obj.Print();
-	cout << endl;
-	obj1.Print();
+	int length = str2;
+	char* str = str2;
+	str1 = str2;
+	str1();
+	for (int i = 0; i < length; i++)
+	{
+		cout << str1[i] << " ";
+	}
 }
