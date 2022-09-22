@@ -18,7 +18,7 @@ public:
 	MyString();
 	MyString(int length);
 	MyString(const char* str);
-	MyString(const char* st,int l);
+	MyString(const char* st, int l);
 	MyString(const MyString& st);
 	void MyStrcpy(MyString& other);
 	bool MyStrStr(const char* s);
@@ -38,6 +38,9 @@ public:
 	{
 		return numberOfobjects;
 	}
+	MyString(MyString&& obj2);
+	MyString& operator=(MyString&& obj2);
+	MyString(initializer_list<char>str_);
 	~MyString();
 };
 const int MyString::amountOfLetters = 80;
@@ -68,18 +71,50 @@ MyString::MyString(const char* str)
 	}
 	this->str[this->length] = '\0';
 }
-MyString::MyString(const char* st,int l)
+MyString::MyString(const char* st, int l)
 {
 	length = strlen(st);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, st);
-	
+
 }
 MyString::MyString(const MyString& st)
 {
 	length = strlen(st.str);
 	str = new char[length + 1];
 	strcpy_s(str, length + 1, st.str);
+}
+MyString::MyString(MyString&& obj2)
+{
+	numberOfobjects++;
+	str = obj2.str;
+	obj2.str = nullptr;
+	length = obj2.length;
+	obj2.length = 0;
+}
+MyString::MyString(initializer_list<char>str_)
+{
+	numberOfobjects++;
+	length = str_.size();
+	str = new char[length+1];
+	for (int i = 0; i < length; i++)
+	{
+		str[i] = *(str_.begin() + i);
+	}
+	str[length] = '\0';
+}
+MyString& MyString::operator=(MyString&& obj2)
+{
+	if (str != nullptr)
+	{
+		delete[]str;
+	}
+	str = obj2.str;
+	obj2.str = str;
+	length = obj2.length;
+	obj2.length = 0;
+	obj2.str = nullptr;
+	return *this;
 }
 MyString& MyString:: operator=(const MyString& obj)
 {
@@ -275,12 +310,6 @@ int main()
 	setlocale(LC_ALL, "ru");
 	MyString str1("Daria");
 	MyString str2(" Kukuruza");
-	int length = str2;
-	char* str = str2;
-	str1 = str2;
-	str1();
-	for (int i = 0; i < length; i++)
-	{
-		cout << str1[i] << " ";
-	}
+	MyString obj{ 'H','e','l','l','o' };
+	obj.Print();
 }
